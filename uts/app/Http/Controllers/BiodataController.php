@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Biodata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rule;
 
 class BiodataController extends Controller
 {
@@ -32,7 +33,7 @@ class BiodataController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'nim' => 'required|string|max:50',
+            'nim' => ['required', 'string', 'max:50', Rule::unique('biodatas', 'nim')],
             'peran' => 'nullable|string|max:100',
             'deskripsi' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -70,7 +71,7 @@ class BiodataController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'nim' => 'required|string|max:50',
+            'nim' => ['required', 'string', 'max:50', Rule::unique('biodatas', 'nim')->ignore($biodata->id)],
             'peran' => 'nullable|string|max:100',
             'deskripsi' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
