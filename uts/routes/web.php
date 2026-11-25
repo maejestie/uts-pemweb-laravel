@@ -1,0 +1,7 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BiodataController;
+
+Route::get('/', [BiodataController::class, 'index'])->name('biodata.index');
+Route::resource('biodata', BiodataController::class)->except(['index']);
